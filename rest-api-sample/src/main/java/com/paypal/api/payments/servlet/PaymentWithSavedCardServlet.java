@@ -1,21 +1,33 @@
-// #CreatePayment Using Saved Card Sample
+// #Create Payment Using Saved Credit Card Sample
 // This sample code demonstrates how you can process a 
-// Payment using a previously saved credit card.
+// Payment using a previously saved Credit Card.
 // API used: /v1/payments/payment
 package com.paypal.api.payments.servlet;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import com.paypal.api.payments.*;
-import com.paypal.api.payments.util.*;
-import com.paypal.core.rest.*;
+import com.paypal.api.payments.Amount;
+import com.paypal.api.payments.CreditCardToken;
+import com.paypal.api.payments.Details;
+import com.paypal.api.payments.FundingInstrument;
+import com.paypal.api.payments.Payer;
+import com.paypal.api.payments.Payment;
+import com.paypal.api.payments.Transaction;
+import com.paypal.api.payments.util.Configuration;
+import com.paypal.core.rest.APIContext;
+import com.paypal.core.rest.OAuthTokenCredential;
+import com.paypal.core.rest.PayPalRESTException;
 
 /**
  * @author lvairamani
@@ -29,19 +41,6 @@ public class PaymentWithSavedCardServlet extends HttpServlet {
 			.getLogger(PaymentWithSavedCardServlet.class);
 
 	public void init(ServletConfig servletConfig) throws ServletException {
-		// ##Load Configuration
-		// Load SDK configuration for
-		// the resource. This intialization code can be
-		// done as Init Servlet.
-		InputStream is = PaymentWithSavedCardServlet.class
-				.getResourceAsStream("/sdk_config.properties");
-
-		try {
-			PayPalResource.initConfig(is);
-		} catch (PayPalRESTException e) {
-			LOGGER.error(e.getMessage());
-		}
-
 	}
 
 	@Override
@@ -61,7 +60,7 @@ public class PaymentWithSavedCardServlet extends HttpServlet {
 		// A resource representing a credit card that can be
 		// used to fund a payment.
 		CreditCardToken creditCardToken = new CreditCardToken();
-		creditCardToken.setCreditCardId("CARD-5BT058015C739554AKE2GCEI");
+		creditCardToken.setCreditCardId("CARD-656164079W913814PKINRPFA");
 
 		// ###Details
 		// Let's you specify details of a payment amount.
@@ -123,7 +122,22 @@ public class PaymentWithSavedCardServlet extends HttpServlet {
 		payment.setPayer(payer);
 		payment.setTransactions(transactions);
 
+		APIContext apiContext = null;
+		String accessToken = null;
 		try {
+			// ###DynamicConfiguration
+			// Retrieve the dynamic configuration map
+			// containing only the mode parameter at
+			// the least
+			Map<String, String> configurationMap = Configuration
+					.getConfigurationMap();
+
+			// Retrieve the client credentials
+			// containing the clientID and
+			// clientSecret
+			Map<String, String> clientCredentials = Configuration
+					.getClientCredentials();
+
 			// ###AccessToken
 			// Retrieve the access token from
 			// OAuthTokenCredential by passing in
@@ -131,22 +145,28 @@ public class PaymentWithSavedCardServlet extends HttpServlet {
 			// It is not mandatory to generate Access Token on a per call basis.
 			// Typically the access token can be generated once and
 			// reused within the expiry window
-			String accessToken = GenerateAccessToken.getAccessToken();
+			accessToken = new OAuthTokenCredential(
+					clientCredentials.get("clientID"),
+					clientCredentials.get("clientSecret"), configurationMap)
+					.getAccessToken();
 
-			// ### APIContext
-			// APIContext which takes 'Access Token'
-			// argument
-			APIContext apiContext = new APIContext(accessToken);
-			// Use this variant if you want to pass in a request id  
-			// that is meaningful in your application, ideally 
+			// ### Api Context
+			// Pass in a `ApiContext` object to authenticate
+			// the call and to send a unique request id
+			// (that ensures idempotency). The SDK generates
+			// a request id if you do not pass one explicitly.
+			apiContext = new APIContext(accessToken);
+			apiContext.setConfigurationMap(configurationMap);
+			// Use this variant if you want to pass in a request id
+			// that is meaningful in your application, ideally
 			// a order id.
-			/* 
-			 * String requestId = Long.toString(System.nanoTime();
-			 * APIContext apiContext = new APIContext(accessToken, requestId ));
+			/*
+			 * String requestId = Long.toString(System.nanoTime());
+			 * APIContext apiContext = new APIContext(accessToken, requestId));
 			 */
 			
 			// Create a payment by posting to the APIService
-			// using a valid AccessToken
+			// using a valid AccessToken in the APIContext
 			// The return object contains the status;
 			Payment createdPayment = payment.create(apiContext);
 			LOGGER.info("Created payment with id = " + createdPayment.getId()
