@@ -89,8 +89,7 @@ a order id.</p></div></div><div class="code"><div class="wrapper">      <span cl
 by making a Payment with intent
 as 'authorize' and parsing through
 the Payment object</p></div></div><div class="code"><div class="wrapper">      <span class="n">String</span> <span class="n">authorizationId</span> <span class="o">=</span> <span class="n">getAuthorizationID</span><span class="o">(</span><span class="n">apiContext</span><span class="o">);</span>
-      
-      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">authorizationId</span><span class="o">);</span></div></div></div><div class="segment"><a id="segment-8" name="segment-8" class="section_anchor"></a><div class="comments"><div class="pilwrap"><a href="#segment-8" class="pilcrow">¶</a></div><div class="wrapper"><p>Get Authorization by sending
+      </div></div></div><div class="segment"><a id="segment-8" name="segment-8" class="section_anchor"></a><div class="comments"><div class="pilwrap"><a href="#segment-8" class="pilcrow">¶</a></div><div class="wrapper"><p>Get Authorization by sending
 a GET request with authorization Id
 to the
 URI v1/payments/authorization/{id}</p></div></div><div class="code"><div class="wrapper">      <span class="n">Authorization</span> <span class="n">authorization</span> <span class="o">=</span> <span class="n">Authorization</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">apiContext</span><span class="o">,</span>
