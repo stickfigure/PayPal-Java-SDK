@@ -104,8 +104,6 @@ public class GetAuthorizationServlet extends HttpServlet {
 			// the Payment object
 			String authorizationId = getAuthorizationID(apiContext);
 			
-			System.out.println(authorizationId);
-
 			// Get Authorization by sending
 			// a GET request with authorization Id
 			// to the

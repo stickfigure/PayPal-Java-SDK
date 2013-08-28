@@ -22,6 +22,8 @@ import org.apache.log4j.Logger;
 
 import com.paypal.api.payments.Amount;
 import com.paypal.api.payments.Details;
+import com.paypal.api.payments.Item;
+import com.paypal.api.payments.ItemList;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payer;
 import com.paypal.api.payments.Payment;
@@ -130,6 +132,24 @@ public class PaymentWithPayPalServlet extends HttpServlet {
 			details.setShipping("1");
 			details.setSubtotal("5");
 			details.setTax("1");
+			
+			// ###Item
+			// An item being paid for
+			Item item = new Item();
+			item.setName("Item Name");
+			// 3-letter Currency Code
+	        item.setCurrency("USD");
+	        item.setPrice("1");
+	        item.setQuantity("5");
+	        // Number or code to identify the item in your catalog/records
+	        item.setSku("sku");
+	        
+	        // ###ItemList
+	        // List of items being paid for
+	        ItemList itemList = new ItemList();
+	        List<Item> items = new ArrayList<Item>();
+	        items.add(item);
+	        itemList.setItems(items);
 
 			// ###Amount
 			// Let's you specify a payment amount.
@@ -148,6 +168,7 @@ public class PaymentWithPayPalServlet extends HttpServlet {
 			transaction.setAmount(amount);
 			transaction
 					.setDescription("This is the payment transaction description.");
+			transaction.setItemList(itemList);
 
 			// The Payment creation API requires a list of
 			// Transaction; add the created `Transaction`
