@@ -29,7 +29,7 @@ For Maven Users:
 		<dependency>
 			<groupId>com.paypal.sdk</groupId>
 			<artifactId>rest-api-sdk</artifactId>
-			<version>0.9.1</version>
+			<version>LATEST</version>
 		</dependency>
 		
 		

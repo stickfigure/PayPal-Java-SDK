@@ -1,5 +1,10 @@
 CHANGELOG
 ========= 
+V0.9.2 (September 11, 2014)
+------------------------
+   * Bump up core
+   * Updated Future Payment sample
+
 V0.9.1 (June 16, 2014)
 ----------------------
    * Update core

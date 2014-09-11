@@ -53,7 +53,7 @@ public class FuturePaymentSample {
 			APIContext apiContext = new APIContext();
 			apiContext.setConfigurationMap(configurationMap);
 			tokeninfo = Tokeninfo.createFromAuthorizationCodeForFpp(apiContext, params);
-			tokeninfo.setAccessToken(tokeninfo.getTokenType() + " " + tokeninfo.getAccessToken());
+			tokeninfo.setAccessToken(tokeninfo.getAccessTokenWithType());
 
 			System.out.println("Generated access token from auth code: " + tokeninfo.getAccessToken());
 		}
