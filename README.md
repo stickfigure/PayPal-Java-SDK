@@ -1,6 +1,7 @@
 ## PayPal REST API Java SDK [![Build Status](https://travis-ci.org/paypal/rest-api-sdk-java.png?branch=master)](https://travis-ci.org/paypal/rest-api-sdk-java)
 This repository contains Java SDK and samples for REST API. For PayPal mobile(Android) SDK, please go to [PayPal Android SDK](https://github.com/paypal/PayPal-Android-SDK)
-> **Before starting to use the sdk, please be aware of the [existing issues and currently available or upcoming features](https://github.com/paypal/rest-api-sdk-python/wiki/Existing-Issues-and-Unavailable%5CUpcoming-features) for the REST APIs. (which the sdks are based on)** 
+
+**Please include full error information including _debug ID_ when you report an issue.**
 
 Prerequisites:
 ---------------
