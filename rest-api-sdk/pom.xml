@@ -1,27 +1,27 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.paypal.sdk</groupId>
+    <groupId>com.voodoodyne.paypal</groupId>
     <artifactId>rest-api-sdk</artifactId>
-    <version>1.2.5</version>
+    <version>1.2.6-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>REST API SDK</name>
-    <description>PayPal SDK for integrating with the REST APIs</description>
+    <description>Fork of PayPal SDK for integrating with the REST APIs</description>
     <url>https://developer.paypal.com/</url>
     <scm>
-        <connection>scm:git:git://github.com/paypal/rest-api-sdk-java.git</connection>
-        <url>https://github.com/paypal/rest-api-sdk-java.git</url>
+        <connection>scm:git://github.com/stickfigure/PayPal-Java-SDK.git</connection>
+        <url>https://github.com/stickfigure/PayPal-Java-SDK.git</url>
     </scm>
     <distributionManagement>
         <snapshotRepository>
-            <id>sonatype-nexus-snapshots</id>
+            <id>ossrh</id>
             <name>Sonatype Nexus Snapshots</name>
-            <url>${sonatypeOssDistMgmtSnapshotsUrl}</url>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
         <repository>
-            <id>sonatype-nexus-staging</id>
+            <id>ossrh</id>
             <name>Nexus Release Repository</name>
-            <url>${sonatypeNexusStagingUrl}</url>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
     <properties>
@@ -124,6 +124,9 @@
                                 jar
                             </goal>
                         </goals>
+                        <configuration>
+                            <additionalparam>-Xdoclint:none</additionalparam>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
